@@ -1,72 +1,50 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import type { AnchorHTMLAttributes } from 'react';
-import { useState } from 'react';
-import { ArrowLeft, Eye, LayoutDashboard, LockKeyhole, LogIn, ShieldCheck, UserRound } from 'lucide-react';
+import { ArrowRight, CalendarDays, ChevronRight, LogIn, MapPin } from 'lucide-react';
 
 function Link({ href, children, ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) {
   return <a href={href} {...props}>{children}</a>;
 }
 
-export default function LoginPage() {
-  const [notice, setNotice] = useState('');
-  const supabaseUrl = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env?.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env?.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const notices = [
+  { date: '08.27', tag: '訓練', title: '九月份週末訓練時間調整公告', pinned: true },
+  { date: '08.23', tag: '球隊', title: '秋季球員裝備尺寸登記提醒', pinned: false },
+  { date: '08.18', tag: '活動', title: '社區親子棒球體驗日開放報名', pinned: false },
+  { date: '08.12', tag: '行政', title: '本季家長值星輪值表已更新', pinned: false },
+  { date: '08.05', tag: '球隊', title: '八月份球隊重要行程整理', pinned: false },
+];
 
-  async function enterPreview(event: { preventDefault: () => void; currentTarget?: EventTarget | null }) {
-    event.preventDefault();
-    const form = event.currentTarget as HTMLFormElement | undefined;
-    const data = form ? new FormData(form) : null;
-    const emailValue = data?.get('email');
-    const passwordValue = data?.get('password');
-    const email = typeof emailValue === 'string' ? emailValue : '';
-    const password = typeof passwordValue === 'string' ? passwordValue : '';
-    setNotice('');
-    if (supabaseUrl && supabaseAnonKey) {
-      try {
-        const response = await fetch(`${supabaseUrl.replace(/\/$/, '')}/auth/v1/token?grant_type=password`, {
-          method: 'POST',
-          headers: { apikey: supabaseAnonKey, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-        const result = await response.json() as { access_token?: string; refresh_token?: string; user?: unknown; msg?: string; error_description?: string };
-        if (!response.ok || !result.access_token) throw new Error(result.error_description || result.msg || '登入失敗，請確認帳號與密碼。');
-        window.localStorage.setItem('sunshine-auth-session', JSON.stringify(result));
-        window.location.href = '/member';
-      } catch (error) {
-        setNotice(error instanceof Error ? error.message : '登入失敗，請稍後再試。');
-      }
-      return;
-    }
-    window.location.href = '/member';
-  }
-
+export default function Home() {
+  const defaults = { first: '在每一次揮棒裡', second: '練習成為更好的自己', summary: '我們相信棒球不只是一場比賽 更是孩子 家庭與社區一起建立的成長記憶', introTitle: '一支從社區出發，陪孩子走得更遠的球隊。', introBody: '陽光是一支由家長、教練與社區夥伴共同支持的少年棒球隊。我們重視基本功，也重視孩子在團隊裡學會負責、互助與尊重。', noticeTitle: '最新公告', galleryTitle: '精彩畫面', galleryQuote: '每一次練習，都是值得保存的成長。', contactTitle: '想更認識我們？', contactBody: '歡迎家長與社區夥伴來信，我們會儘快回覆。', footerPrimary: '© 2026 陽光社區棒球隊', footerSecondary: '以孩子的安全、成長與團隊精神為優先', heroImage: '/baseball-hero.png', galleryImage: '/baseball-hero.png', visible: [true, true, true, true, true, true] };
+  const [home, setHome] = useState(defaults);
+  useEffect(() => {
+    const stored = window.localStorage.getItem('sunshine-homepage-settings');
+    if (stored) { try { setHome({ ...defaults, ...JSON.parse(stored) }); } catch { window.localStorage.removeItem('sunshine-homepage-settings'); } }
+  }, []);
   return (
-    <main className="login-page">
-      <section className="login-visual">
-        <img src="/baseball-hero.png" alt="夕陽下的社區棒球場" />
-        <div className="login-overlay" />
-        <Link href="/index.html" className="login-brand"><span>陽</span><b>陽光社區棒球隊<small>SUNSHINE BASEBALL</small></b></Link>
-        <div className="login-message"><p>MEMBER PORTAL</p><h1>一起練習，<br/>也一起把球隊照顧好。</h1><span>登入後可查看球員、訓練、便當、值星及球隊內部資訊。</span></div>
+    <main>
+      <header className="site-header">
+        <Link href="/index.html" className="brand" aria-label="陽光社區棒球隊首頁">
+          <span className="brand-mark">陽</span>
+          <span><strong>陽光社區棒球隊</strong><small>SUNSHINE BASEBALL</small></span>
+        </Link>
+        <nav className="public-nav" aria-label="公開網站導覽">
+        <Link className="active" href="/index.html">首頁</Link><Link href="/team">球隊介紹</Link><Link href="/announcements">最新公告</Link><Link href="/gallery">精彩畫面</Link><Link href="/contact">聯絡我們</Link>
+        </nav>
+        <Link href="/login" className="login-button"><LogIn size={17}/>球員登入</Link>
+      </header>
+      <section className="hero hero-first">
+        <img src={home.heroImage} alt="夕陽下的社區棒球場與練習裝備" /><div className="hero-shade" />
+        <div className="hero-copy"><p className="eyebrow">一起練習・一起成長</p><h1><span className="hero-title-line">{home.first}</span><span className="hero-title-line">{home.second}</span></h1><p className="hero-summary">{home.summary}</p><div className="hero-actions"><Link href="/team" className="primary-action">認識球隊 <ArrowRight size={18}/></Link><Link href="/announcements" className="secondary-action">查看最新公告</Link></div></div>
+        <div className="hero-meta"><MapPin size={16}/> 每週六、日・社區河濱棒球場</div>
       </section>
-      <section className="login-panel">
-        <Link href="/index.html" className="back-link"><ArrowLeft size={16}/> 返回公開網站</Link>
-        <div className="login-card">
-          <div className="login-title"><span><LogIn/></span><div><p>球員入口</p><h2>球員登入</h2></div></div>
-          <div className="preview-notice"><ShieldCheck/><p><b>{supabaseUrl ? '正式登入模式' : '介面確認模式'}</b><br/>{supabaseUrl ? '使用球隊管理員建立的 Supabase 帳號登入。' : '目前為本機介面確認模式；接上 Supabase 後會改由正式帳號驗證。'}</p></div>
-          <form onSubmit={enterPreview}>
-            <label>電子信箱<div className="login-input"><UserRound/><input name="email" aria-label="電子信箱" defaultValue={supabaseUrl ? '' : 'preview@example.com'} placeholder="請輸入電子信箱" type="email" required={Boolean(supabaseUrl)} /></div></label>
-            <label>密碼<div className="login-input"><LockKeyhole/><input name="password" aria-label="密碼" defaultValue={supabaseUrl ? '' : '123456'} type="password" placeholder="請輸入密碼" required={Boolean(supabaseUrl)}/><Eye/></div></label>
-            <div className="login-options"><label><input type="checkbox" defaultChecked/> 記住帳號</label><button type="button" onClick={() => setNotice('請聯絡球隊管理員重新設定登入方式。')}>忘記密碼？</button></div>
-            <button className="login-submit" type="submit">登入並查看內部功能 <LogIn/></button>
-          </form>
-          {notice && <output className="login-notice">{notice}</output>}
-          <div className="login-divider"><span>或</span></div>
-          {!supabaseUrl && <Link href="/admin" className="admin-direct">介面預覽：管理後台 <LayoutDashboard/></Link>}
-          <div className="login-access"><small>登入後可直接切換</small><div><span>球員中心</span><span>教練專區</span><span>管理後台</span></div></div>
-        </div>
-        <p className="login-footnote">{supabaseUrl ? '登入資料由 Supabase Auth 驗證，頁面資料依資料庫權限顯示。' : '此版本為本機介面與流程確認，尚未連接正式會員資料。'}</p>
-      </section>
+      <section style={{ display: home.visible[1] ? undefined : 'none' }} className="intro-section section-wrap"><div><p className="section-kicker">ABOUT OUR TEAM</p><h2>{home.introTitle}</h2></div><div className="intro-copy"><p>{home.introBody}</p><Link href="/team" className="text-link">看完整球隊介紹 <ArrowRight size={16}/></Link></div><div className="number-card"><strong>2018</strong><span>球隊成立</span></div></section>
+      <section style={{ display: home.visible[2] ? undefined : 'none' }} className="notice-section"><div className="section-wrap"><div className="section-heading-row"><div><p className="section-kicker">LATEST NEWS</p><h2>{home.noticeTitle}</h2></div><Link href="/announcements" className="text-link">More <ArrowRight size={16}/></Link></div><div className="notice-list">{notices.map((item)=><Link href="/announcements/training-update" className="notice-row" key={item.title}><time>{item.date}</time><span className="notice-tag">{item.tag}</span><strong>{item.pinned&&<em>置頂</em>}{item.title}</strong><ChevronRight size={18}/></Link>)}</div></div></section>
+      <section style={{ display: home.visible[3] ? undefined : 'none' }} className="gallery-section section-wrap"><div className="section-heading-row"><div><p className="section-kicker">TEAM MOMENTS</p><h2>{home.galleryTitle}</h2></div><Link href="/gallery" className="text-link">More <ArrowRight size={16}/></Link></div><div className="gallery-grid"><Link href="/gallery/summer-training" className="gallery-main"><img src={home.galleryImage} alt="球場練習時光"/><span>夏季訓練日誌 <small>12 張照片</small></span></Link><div className="gallery-quote"><CalendarDays size={24}/><strong>{home.galleryQuote}</strong><p>點選相簿可瀏覽完整照片與大圖。</p></div></div></section>
+      <section style={{ display: home.visible[4] ? undefined : 'none' }} className="contact-section"><div className="section-wrap contact-inner"><div><p className="section-kicker light">CONTACT US</p><h2>{home.contactTitle}</h2><p>{home.contactBody}</p></div><Link href="/contact" className="contact-button">聯絡球隊 <ArrowRight size={18}/></Link></div></section>
+      <footer style={{ display: home.visible[5] ? undefined : 'none' }} className="site-footer"><span>{home.footerPrimary}</span><span>{home.footerSecondary}</span></footer>
     </main>
   );
 }
