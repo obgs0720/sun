@@ -1,0 +1,52 @@
+/* 首頁採用與其他公開頁相同的「導覽列在上、主視覺在下」配置。 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 18px rgba(16, 42, 42, 0.08);
+}
+
+.hero-first {
+  height: clamp(470px, 62vh, 580px);
+  min-height: 470px;
+}
+
+.hero-first .hero-copy {
+  width: min(780px, calc(100vw - 56px));
+}
+
+.hero-first h1 {
+  font-size: clamp(28px, 5vw, 68px);
+}
+
+.hero-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero-copy > .hero-summary {
+  width: max-content;
+  max-width: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .hero-first {
+    height: 520px;
+    min-height: 520px;
+  }
+
+  .hero-first .hero-copy {
+    top: 47%;
+    width: calc(100% - 48px);
+  }
+
+  .hero-copy > .hero-summary {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .hero-first .hero-meta {
+    bottom: 18px;
+  }
+}
