@@ -1,0 +1,57 @@
+.homepage-section-card {
+  grid-template-columns: 26px 34px 84px minmax(180px, 1fr) 190px auto auto 30px;
+}
+
+.section-image-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.section-image-upload button {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--forest);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.section-image-upload svg {
+  width: 14px;
+  height: 14px;
+}
+
+.section-image-upload small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+@media (max-width: 1180px) {
+  .homepage-section-card {
+    grid-template-columns: 24px 30px 72px minmax(160px, 1fr) 190px auto auto;
+  }
+
+  .homepage-section-card .more-button {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .homepage-section-card {
+    grid-template-columns: 24px 30px 60px 1fr;
+  }
+
+  .section-image-upload,
+  .visibility-toggle,
+  .section-edit,
+  .more-button {
+    grid-column: 4;
+  }
+}
