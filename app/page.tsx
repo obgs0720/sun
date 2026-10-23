@@ -46,11 +46,11 @@ export default function LoginPage() {
       <section className="login-visual">
         <img src="/baseball-hero.png" alt="夕陽下的社區棒球場" />
         <div className="login-overlay" />
-        <Link href="/" className="login-brand"><span>陽</span><b>陽光社區棒球隊<small>SUNSHINE BASEBALL</small></b></Link>
+        <Link href="/index.html" className="login-brand"><span>陽</span><b>陽光社區棒球隊<small>SUNSHINE BASEBALL</small></b></Link>
         <div className="login-message"><p>MEMBER PORTAL</p><h1>一起練習，<br/>也一起把球隊照顧好。</h1><span>登入後可查看球員、訓練、便當、值星及球隊內部資訊。</span></div>
       </section>
       <section className="login-panel">
-        <Link href="/" className="back-link"><ArrowLeft size={16}/> 返回公開網站</Link>
+        <Link href="/index.html" className="back-link"><ArrowLeft size={16}/> 返回公開網站</Link>
         <div className="login-card">
           <div className="login-title"><span><LogIn/></span><div><p>球員入口</p><h2>球員登入</h2></div></div>
           <div className="preview-notice"><ShieldCheck/><p><b>{supabaseUrl ? '正式登入模式' : '介面確認模式'}</b><br/>{supabaseUrl ? '使用球隊管理員建立的 Supabase 帳號登入。' : '目前為本機介面確認模式；接上 Supabase 後會改由正式帳號驗證。'}</p></div>
