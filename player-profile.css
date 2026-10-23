@@ -1,0 +1,268 @@
+.player-profile-page {
+  display: grid;
+  gap: 18px;
+}
+
+.profile-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.profile-detail-card,
+.additional-parent-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  padding: 22px 24px;
+}
+
+.profile-detail-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+}
+
+.profile-detail-heading h2,
+.additional-parent-heading h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.profile-detail-heading button {
+  border: 0;
+  background: transparent;
+  color: var(--forest);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.profile-detail-row {
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.profile-detail-row > span {
+  color: var(--muted);
+  font-size: 14px;
+  text-align: left;
+}
+
+.profile-detail-row > span small,
+.parent-line-field small {
+  margin-left: 7px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #eef1ed;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.profile-detail-row > b {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.profile-detail-row.locked {
+  background: #f3f4f1;
+  padding-inline: 10px;
+  color: #8b938d;
+}
+
+.profile-detail-row.locked > b {
+  color: #8b938d;
+}
+
+.school-fields {
+  display: grid;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.profile-detail-card {
+  padding: 26px 28px;
+}
+
+.profile-detail-row > b,
+.profile-detail-row > input,
+.school-fields {
+  min-width: 0;
+}
+
+.school-fields > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.school-fields input,
+.school-fields select,
+.profile-placeholder-input {
+  width: 100%;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbf8;
+  color: var(--ink);
+  padding: 0 10px;
+  font: inherit;
+  font-size: 14px;
+}
+
+.profile-placeholder-input::placeholder {
+  color: #a9afaa;
+}
+
+.profile-value-box {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbf8;
+  color: var(--ink);
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.additional-parent-heading,
+.additional-parent-heading > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.additional-parent-heading > div > span {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #edf1dc;
+  color: var(--forest);
+}
+
+.additional-parent-heading svg {
+  width: 19px;
+  height: 19px;
+}
+
+.additional-parent-heading p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.additional-parent-heading > button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--forest);
+  color: #fff;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.additional-parent-card.open .additional-parent-heading > button {
+  background: #fff;
+  color: var(--forest);
+}
+
+.additional-parent-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.additional-parent-form label {
+  display: grid;
+  gap: 7px;
+}
+
+.additional-parent-form label > span {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.additional-parent-form input,
+.additional-parent-form select {
+  width: 100%;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fbfbf8;
+  color: var(--ink);
+  padding: 0 11px;
+  font: inherit;
+  font-size: 14px;
+}
+
+.parent-line-field,
+.additional-parent-actions {
+  grid-column: 1 / -1;
+}
+
+.additional-parent-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.additional-parent-actions button {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--forest);
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.additional-parent-actions button:last-child {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .profile-detail-grid,
+  .additional-parent-form {
+    grid-template-columns: 1fr;
+  }
+
+  .additional-parent-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .additional-parent-heading > button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .parent-line-field,
+  .additional-parent-actions {
+    grid-column: auto;
+  }
+}

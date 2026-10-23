@@ -1,0 +1,17 @@
+.brand-mark,
+.portal-brand > span,
+.login-brand > span,
+.mini-nav > span {
+  background: #f4cf45;
+  color: var(--forest-deep);
+}
+
+.data-row.data-columns-5 {
+  grid-template-columns: 1.2fr .9fr .75fr 1fr 1.15fr;
+}
+
+@media (max-width: 640px) {
+  .data-row.data-columns-5 {
+    min-width: 760px;
+  }
+}
